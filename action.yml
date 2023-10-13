@@ -1,0 +1,57 @@
+name: "GitHub Classroom Autograding Results handler"
+description: "Integrate your CS class wit GitHub using GitHub Classroom"
+inputs:
+  runners:
+    description: 'Comma-separated list of step ids'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - shell: bash
+      run: |
+        IFS=',' read -ra RUNNER_IDS <<< "${{ inputs.runners }}"
+        for ID in "${RUNNER_IDS[@]}"; do
+        result="${{ steps.$ID.outputs.result }}"
+        
+        # Extract the 'tests' array length
+        length=$(echo $result | jq '.tests | length')
+
+        # Initialize variables
+        failed=false
+        passed_tests=0
+
+        # Iterate through each test in the 'tests' array
+        for (( i=0; i<$length; i++ )); do
+          # Extract relevant data for the current test
+          name=$(echo $result | jq -r ".tests[$i].name")
+          status=$(echo $result | jq -r ".tests[$i].status")
+          
+          # Log the test name
+          echo -e "\033[36m📝 $name\033[0m"
+          echo ""
+          
+          # Check the test status and log accordingly
+          if [ "$status" == "pass" ]; then
+            echo -e "\033[32m✅ $name\033[0m"
+            passed_tests=$((passed_tests + 1))
+          else
+            failed=true
+            message=$(echo $result | jq -r ".tests[$i].message // 'Failed to run test'")
+            echo -e "\033[31m❌ $name\033[0m"
+            echo "Error: $message"
+          fi
+          
+          echo ""
+        done
+
+        # Additional logic based on test results
+        if [ "$failed" = true ]; then
+          echo "Some tests failed."
+        else
+          echo "All tests passed."
+        fi
+
+        # Calculate and display points
+        points=$(awk "BEGIN {printf \"%.2f\", ($passed_tests/$length)*100}")
+        echo "Total points: $points/100"
