@@ -14,5 +14,8 @@ jobs:
         id: runner2
       - name: Show Output
         uses: ./
+        env:
+          RUNNER1_RESULTS: ${{steps.runner1.outputs.result}}
+          RUNNER2_RESULTS: ${{steps.runner2.outputs.result}}
         with:
           runners: "runner1,runner2"
