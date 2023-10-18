@@ -12,7 +12,7 @@ exports.ConsoleResults = function ConsoleResults(runner_results) {
         magenta: '\x1b[35m'
     };
 
-    runner_results.forEach((results, index) => {
+    runner_results.forEach(({runner, results}, index) => {
         // Fun transition to new runner
         if (index > 0) {
             console.log(`${colors.magenta}🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀${colors.reset}\n`);
