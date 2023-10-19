@@ -1,10 +1,10 @@
 const core = require('@actions/core')
 const github = require('@actions/github')
 
-exports.NotifyClassroom = async function NotifyClassroom (runner_results) {
+exports.NotifyClassroom = async function NotifyClassroom (runnerResults) {
   // combine max score and total score from each {runner, results} pair
   // if max_score is greater than 0 run the rest of this code
-  const { totalScore, maxScore } = runner_results.reduce((acc, { results }) => {
+  const { totalScore, maxScore } = runnerResults.reduce((acc, { results }) => {
     if (!results.max_score) return acc
 
     acc.maxScore += results.max_score

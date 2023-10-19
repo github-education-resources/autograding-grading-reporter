@@ -15,7 +15,7 @@ try {
   ConsoleResults(runnerResults)
   NotifyClassroom(runnerResults)
 
-  if (runnerResults.any((r) => r.results.status === 'failed')) {
+  if (runnerResults.some((r) => r.results.status === 'fail')) {
     core.setFailed('Some tests failed.')
   }
 } catch (error) {
