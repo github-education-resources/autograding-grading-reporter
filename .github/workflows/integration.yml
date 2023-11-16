@@ -17,7 +17,7 @@ jobs:
       uses: education/autograding-io-grader@main
       with:
         test-name: Shout Test
-        command: "./test/bin/shout"
+        command: "./test/bin/shout.sh"
         input: hello
         expected-output: HELLO
         comparison-method: exact
