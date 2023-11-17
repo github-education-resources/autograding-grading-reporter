@@ -1,6 +1,7 @@
 #!/bin/bash
 
- echo "$1" | tr '[:lower:]' '[:upper:]'
+input=$(cat)
+echo "$input" | tr '[:lower:]' '[:upper:]'
 
 
 
