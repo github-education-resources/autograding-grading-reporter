@@ -1,31 +1,21 @@
-name: Autograding Tests
-"on":
-  - push
-  - workflow_dispatch
-permissions:
-  checks: write
-  actions: read
-  contents: read
+name: Test
+
+on: [push]
+
 jobs:
-  run-tests:
+  integration:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Shout Test
-        id: shout-test
-        uses: education/autograding-io-grader@main
-        with:
-          test-name: Shout Test
-          command: "./test/bin/shout"
-          input: hello
-          expected-output: HELLO
-          comparison-method: exact
-          timeout: 10
-          max-score: 100
-      - name: Autograding Reporter
+      - uses: actions/checkout@v4
+      - uses: octosteve/python-test-runner@add-additional-info
+        id: runner1
+      - uses: octosteve/python-test-runner@add-additional-info
+        id: runner2
+      - name: Show Output
         uses: ./
         env:
-          SHOUT-TEST_RESULTS: "${{steps.shout-test.outputs.result}}"
+          RUNNER1_RESULTS: ${{steps.runner1.outputs.result}}
+          RUNNER2_RESULTS: ${{steps.runner2.outputs.result}}
         with:
-          runners: shout-test
+          runners: "runner1,runner2"
