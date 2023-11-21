@@ -2,12 +2,14 @@ const { COLORS } = require("./colors");
 const Table = require("cli-table3");
 
 const getTestScore = (results) => {
-  return results.tests.reduce((acc, { status }) => {
+  const score = results.tests.reduce((acc, { status }) => {
     if (status === "pass") {
       return acc + 1;
     }
     return acc;
   }, 0);
+
+  return (score / results.tests.length) * (getMaxScore(results) || 1);
 };
 
 const getAllMaxScores = (runnerResults) => {
@@ -63,9 +65,11 @@ function AggregateResults(runnerResults) {
     "Total: ",
     "----",
     "----",
-    totals.reduce((acc, { score, weight, maxScore }) => {
-      return acc + (score / (maxScore || 1)) * weight;
-    }, 0) + "%",
+    totals
+      .reduce((acc, { score, weight, maxScore }) => {
+        return acc + ((score || 0) / (maxScore || 1)) * weight;
+      }, 0)
+      .toFixed(2) + "%",
   ]);
   console.log(table.toString());
 }
