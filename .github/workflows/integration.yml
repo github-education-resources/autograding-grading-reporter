@@ -1,21 +1,41 @@
-name: Test
-
-on: [push]
-
+name: Autograding Tests
+'on':
+- push
+- workflow_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
 jobs:
   integration:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v4
-      - uses: octosteve/python-test-runner@add-additional-info
-        id: runner1
-      - uses: octosteve/python-test-runner@add-additional-info
-        id: runner2
-      - name: Show Output
-        uses: ./
-        env:
-          RUNNER1_RESULTS: ${{steps.runner1.outputs.result}}
-          RUNNER2_RESULTS: ${{steps.runner2.outputs.result}}
-        with:
-          runners: "runner1,runner2"
+    - uses: actions/checkout@v4
+    - uses: ruby/setup-ruby@v1
+    - name: Shout Test
+      id: shout-test
+      uses: education/autograding-io-grader@main
+      with:
+        test-name: Shout Test
+        command: "./test/bin/shout.sh"
+        input: hello
+        expected-output: HELLO
+        comparison-method: exact
+        timeout: 10
+        max-score: 100
+    - name: A command test
+      id: a-command-test
+      uses: education/autograding-command-grader@main
+      with:
+        test-name: A command test
+        setup-command: bundle install
+        command: rspec hello_spec.rb
+        timeout: 10
+        max-score: 100
+    - name: Autograding Reporter
+      uses: ./
+      env:
+        SHOUT-TEST_RESULTS: "${{steps.shout-test.outputs.result}}"
+        A-COMMAND-TEST_RESULTS: "${{steps.a-command-test.outputs.result}}"
+      with:
+        runners: shout-test,a-command-test
