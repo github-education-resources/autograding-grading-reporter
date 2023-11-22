@@ -10,6 +10,7 @@ jobs:
   integration:
     runs-on: ubuntu-latest
     steps:
+    - run: npm install
     - uses: actions/checkout@v4
     - uses: ruby/setup-ruby@v1
     - name: Shout Test
