@@ -10,8 +10,8 @@ jobs:
   run-tests:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+    - uses: actions/checkout@v4
+    - uses: ruby/setup-ruby@v1
     - name: Shout Test
       id: shout-test
       uses: education/autograding-io-grader@main
@@ -25,10 +25,10 @@ jobs:
         max-score: 100
     - name: A command test
       id: a-command-test
-      uses: education/autograding-command-grader@change-to-bundled-file
+      uses: education/autograding-command-grader@main
       with:
         test-name: A command test
-        setup-command: ./bin/setup.sh
+        setup-command: bundle install
         command: rspec hello_spec.rb
         timeout: 10
         max-score: 100
