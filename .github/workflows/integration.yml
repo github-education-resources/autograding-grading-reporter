@@ -23,9 +23,19 @@ jobs:
         comparison-method: exact
         timeout: 10
         max-score: 100
+    - name: A command test
+      id: a-command-test
+      uses: education/autograding-command-grader@main
+      with:
+        test-name: A command test
+        setup-command: bundle install
+        command: rspec hello_spec.rb
+        timeout: 10
+        max-score: 100
     - name: Autograding Reporter
       uses: ./
       env:
         SHOUT-TEST_RESULTS: "${{steps.shout-test.outputs.result}}"
+        A-COMMAND-TEST_RESULTS: "${{steps.a-command-test.outputs.result}}"
       with:
-        runners: shout-test
+        runners: shout-test,a-command-test
