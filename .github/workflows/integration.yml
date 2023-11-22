@@ -25,10 +25,10 @@ jobs:
         max-score: 100
     - name: A command test
       id: a-command-test
-      uses: education/autograding-command-grader@main
+      uses: education/autograding-command-grader@change-to-bundled-file
       with:
         test-name: A command test
-        setup-command: bundle install
+        setup-command: ./bin/setup.sh
         command: rspec hello_spec.rb
         timeout: 10
         max-score: 100
