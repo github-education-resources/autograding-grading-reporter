@@ -7,7 +7,7 @@ permissions:
   actions: read
   contents: read
 jobs:
-  run-tests:
+  integration:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
