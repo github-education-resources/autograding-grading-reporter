@@ -1,5 +1,5 @@
 name: "GitHub Classroom Autograding Results handler"
-description: "Integrate your CS class wit GitHub using GitHub Classroom"
+description: "Integrate your CS class with GitHub using GitHub Classroom"
 inputs:
   runners:
     description: 'Comma-separated list of step ids'
@@ -7,4 +7,4 @@ inputs:
 
 runs:
   using: "node20"
-  main: "src/main.js"
+  main: "dist/main.js"

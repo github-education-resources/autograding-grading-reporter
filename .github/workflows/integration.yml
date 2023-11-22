@@ -10,9 +10,9 @@ jobs:
   integration:
     runs-on: ubuntu-latest
     steps:
-    - run: npm install
     - uses: actions/checkout@v4
     - uses: ruby/setup-ruby@v1
+    - run: npm install
     - name: Shout Test
       id: shout-test
       uses: education/autograding-io-grader@main
