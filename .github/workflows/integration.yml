@@ -7,11 +7,11 @@ permissions:
   actions: read
   contents: read
 jobs:
-  run-tests:
+  integration:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+    - uses: actions/checkout@v4
+    - uses: ruby/setup-ruby@v1
     - name: Shout Test
       id: shout-test
       uses: education/autograding-io-grader@main
@@ -23,9 +23,19 @@ jobs:
         comparison-method: exact
         timeout: 10
         max-score: 100
+    - name: A command test
+      id: a-command-test
+      uses: education/autograding-command-grader@main
+      with:
+        test-name: A command test
+        setup-command: bundle install
+        command: rspec hello_spec.rb
+        timeout: 10
+        max-score: 100
     - name: Autograding Reporter
       uses: ./
       env:
         SHOUT-TEST_RESULTS: "${{steps.shout-test.outputs.result}}"
+        A-COMMAND-TEST_RESULTS: "${{steps.a-command-test.outputs.result}}"
       with:
-        runners: shout-test
+        runners: shout-test,a-command-test
