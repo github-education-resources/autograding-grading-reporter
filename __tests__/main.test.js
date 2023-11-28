@@ -3,7 +3,7 @@ const cp = require('child_process')
 const path = require('path')
 
 const node = process.execPath
-const ip = path.join(__dirname, '..', 'main.js')
+const ip = path.join(__dirname, '..','dist', 'main.js')
 const options = {
   env: process.env,
   encoding: 'utf-8'

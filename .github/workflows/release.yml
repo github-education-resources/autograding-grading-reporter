@@ -1,0 +1,28 @@
+name: Release
+on:
+  workflow_dispatch:
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Release
+        shell: bash
+        run: |
+          set -e
+          echo "Checkout the release branch"
+          git checkout releases/v1  
+          echo "run build script"    
+          npm run build
+          echo "Add the dist"
+          git add .
+          echo "Commit"
+          git commit -m "v1"
+          echo "Force push to overwrite any previous commits for this branch"
+          git push -f origin releases/v1
+          echo "Remove previously pushed tags (v1 will be unusable momentarily until you re-push)"
+          git push origin :refs/tags/v1
+          echo "Re-apply the tag"
+          git tag -fa v1 -m "v1"
+          echo "Push everything"
+          git push origin v1
