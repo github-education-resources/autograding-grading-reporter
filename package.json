@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "build": "bin/build.mjs"
+    "build": "esbuild src/main.js --bundle --minify --platform=node --outfile=dist/main.js --format=esm"
   },
   "keywords": [],
   "author": "",
