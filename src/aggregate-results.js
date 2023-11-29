@@ -38,7 +38,7 @@ function AggregateResults(runnerResults) {
 
   const allMaxScores = getAllMaxScores(runnerResults)
 
-  console.log(COLORS.magenta, 'Test Runner Summary', COLORS.reset)
+  console.log(COLORS.magenta, 'Test runner summary', COLORS.reset)
 
   const totals = [
     {
