@@ -1,19 +1,22 @@
 const core = require('@actions/core')
 const github = require('@actions/github')
 
-exports.NotifyClassroom = async function NotifyClassroom (runnerResults) {
+exports.NotifyClassroom = async function NotifyClassroom(runnerResults) {
   // combine max score and total score from each {runner, results} pair
   // if max_score is greater than 0 run the rest of this code
-  const { totalScore, maxScore } = runnerResults.reduce((acc, { results }) => {
-    if (!results.max_score) return acc
+  const {totalScore, maxScore} = runnerResults.reduce(
+    (acc, {results}) => {
+      if (!results.max_score) return acc
 
-    acc.maxScore += results.max_score
-    results.tests.forEach(({ score }) => {
-      acc.totalScore += score
-    })
+      acc.maxScore += results.max_score
+      results.tests.forEach(({score}) => {
+        acc.totalScore += score
+      })
 
-    return acc
-  }, { totalScore: 0, maxScore: 0 })
+      return acc
+    },
+    {totalScore: 0, maxScore: 0},
+  )
   if (!maxScore) return
 
   // Our action will need to API access the repository so we require a token
@@ -41,11 +44,13 @@ exports.NotifyClassroom = async function NotifyClassroom (runnerResults) {
   const checkRunsResponse = await octokit.rest.checks.listForRepo({
     owner,
     repo,
-    check_name: 'Autograding'
+    check_name: 'Autograding',
   })
 
   // Filter to find the check run named "Autograding" for the specific workflow run ID
-  const checkRun = checkRunsResponse.data.check_runs.find(cr => cr.name === 'Autograding' && cr.check_suite.workflow_run_id === runId)
+  const checkRun = checkRunsResponse.data.check_runs.find(
+    (cr) => cr.name === 'Autograding' && cr.check_suite.workflow_run_id === runId,
+  )
 
   if (!checkRun) return
 
@@ -61,15 +66,17 @@ exports.NotifyClassroom = async function NotifyClassroom (runnerResults) {
       title: 'Autograding',
       summary: text,
       text,
-      annotations: [{
-        // Using the `.github` path is what GitHub Actions does
-        path: '.github',
-        start_line: 1,
-        end_line: 1,
-        annotation_level: 'notice',
-        message: text,
-        title: 'Autograding complete'
-      }]
-    }
+      annotations: [
+        {
+          // Using the `.github` path is what GitHub Actions does
+          path: '.github',
+          start_line: 1,
+          end_line: 1,
+          annotation_level: 'notice',
+          message: text,
+          title: 'Autograding complete',
+        },
+      ],
+    },
   })
 }
