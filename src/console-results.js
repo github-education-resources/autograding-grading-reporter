@@ -10,7 +10,7 @@ exports.ConsoleResults = function ConsoleResults(runnerResults) {
       console.log(`${COLORS.magenta}🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀${COLORS.reset}\n`);
     }
 
-    console.log(`${COLORS.cyan}🔄 Processing: ${runner}${COLORS.reset}`);
+    console.log(`🔄 Processing: ${runner}`);
     let passedTests = 0;
     const totalTests = results.tests.length;
 
