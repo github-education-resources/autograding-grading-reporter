@@ -63,7 +63,7 @@ jobs:
       id: shout-test
       uses: education/autograding-io-grader@v1
       with:
-        test-name: 'Test Name'
+        test-name: Shout Test
         command: './bin/shout'
         input: 'hello'
         expected-output: 'HELLO'
