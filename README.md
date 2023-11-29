@@ -60,6 +60,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
     - name: Run Autograding Tests
+      id: shout-test
       uses: education/autograding-io-grader@v1
       with:
         test-name: 'Test Name'
@@ -67,6 +68,15 @@ jobs:
         input: 'hello'
         expected-output: 'HELLO'
         comparison-method: 'exact'
+    - name: A command test
+      id: a-command-test
+      uses: education/autograding-command-grader@v1
+      with:
+       test-name: A command test
+       setup-command: bundle install
+       command: rspec
+       timeout: 10
+       max-score: 100
     - name: Autograding Reporter
       uses: education/autograding-grading-reporter@v1
       env:
@@ -74,4 +84,3 @@ jobs:
         A-COMMAND-TEST_RESULTS: "${{steps.a-command-test.outputs.result}}"
       with:
         runners: shout-test,a-command-test
-      
