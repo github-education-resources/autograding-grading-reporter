@@ -38,4 +38,4 @@ jobs:
         SHOUT-TEST_RESULTS: "${{steps.shout-test.outputs.result}}"
         A-COMMAND-TEST_RESULTS: "${{steps.a-command-test.outputs.result}}"
       with:
-        runners: shout-test,a-command-test
+        runners: "[shout-test,a-command-test]"
