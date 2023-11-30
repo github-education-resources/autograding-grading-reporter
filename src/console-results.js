@@ -10,9 +10,9 @@ exports.ConsoleResults = function ConsoleResults(runnerResults) {
       console.log(`${COLORS.magenta}🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀${COLORS.reset}\n`)
     }
 
-    console.log(`${COLORS.cyan}🔄 Processing: ${runner}${COLORS.reset}`)
-    let passedTests = 0
-    const totalTests = results.tests.length
+    console.log(`🔄 Processing: ${runner}`);
+    let passedTests = 0;
+    const totalTests = results.tests.length;
 
     results.tests.forEach((test) => {
       if (test.status === 'pass') {
@@ -34,6 +34,6 @@ exports.ConsoleResults = function ConsoleResults(runnerResults) {
   })
 
   // Calculate and display grand total points
-  const grandTotalPoints = (grandTotalPassedTests / grandTotalTests) * 100
-  console.log(`${COLORS.cyan}🏆 Grand Total Points: ${grandTotalPoints.toFixed(2)}/100${COLORS.reset}\n`)
-}
+  const grandTotalPoints = (grandTotalPassedTests / grandTotalTests) * 100;
+  console.log(`${COLORS.cyan}🏆 Grand total points: ${grandTotalPoints.toFixed(2)}/100${COLORS.reset}\n`);
+};
