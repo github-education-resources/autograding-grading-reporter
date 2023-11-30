@@ -27,7 +27,9 @@ function AggregateResults(runnerResults) {
     colWidths: [20, 13, 13, 10],
   });
 
-  console.log(COLORS.magenta, "Test Runner Summary", COLORS.reset);
+  const allMaxScores = getAllMaxScores(runnerResults);
+
+  console.log(COLORS.magenta, "Test runner summary", COLORS.reset);
 
   const totals = getTableTotals(runnerResults, (row) => table.push(row));
 
