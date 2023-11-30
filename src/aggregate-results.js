@@ -1,34 +1,25 @@
 const { COLORS } = require("./colors");
 const Table = require("cli-table3");
+const { getTotalMaxScore, getTestWeight, getTestScore, totalPercentageReducer, getMaxScoreForTest } = require("./helpers/test-helpers");
 
-const getTestScore = (results) => {
-  const score = results.tests.reduce((acc, { status }) => {
-    if (status === "pass") {
-      return acc + 1;
-    }
-    return acc;
-  }, 0);
+function getTableTotals(runnerResults, pushToTable) {
+  const totalMaxScore = getTotalMaxScore(runnerResults);
 
-  return (score / results.tests.length) * (getMaxScore(results) || 1);
-};
+  return runnerResults.map(({ runner, results }) => {
+    const maxScore = getMaxScoreForTest(results);
+    const weight = getTestWeight(maxScore, totalMaxScore);
+    const score = getTestScore(results);
+    const testName = runner.trim();
 
-const getAllMaxScores = (runnerResults) => {
-  return runnerResults.reduce((acc, { results }) => {
-    return acc + results.max_score;
-  }, 0);
-};
+    pushToTable([testName, score, maxScore, weight]);
 
-const getMaxScore = (results) => {
-  return results.max_score || 0;
-};
-
-const getWeight = (maxScore, allMaxScores) => {
-  if (maxScore === 0) {
-    return (0).toFixed(2);
-  }
-  const weight = allMaxScores !== 0 ? (maxScore / allMaxScores) * 100 : 0;
-  return Math.round(weight).toFixed(2);
-};
+    return {
+      score,
+      maxScore,
+      weight,
+    };
+  });
+}
 
 function AggregateResults(runnerResults) {
   const table = new Table({
@@ -40,38 +31,14 @@ function AggregateResults(runnerResults) {
 
   console.log(COLORS.magenta, "Test runner summary", COLORS.reset);
 
-  let totals = [
-    {
-      score: 0,
-      maxScore: 0,
-      weight: 0,
-    },
-  ];
+  const totals = getTableTotals(runnerResults, (row) => table.push(row));
 
-  runnerResults.forEach(({ runner, results }) => {
-    const maxScore = getMaxScore(results);
-    const weight = getWeight(maxScore, allMaxScores);
-    const score = getTestScore(results);
+  const totalPercent = totals.reduce(totalPercentageReducer, 0).toFixed(2) + "%";
 
-    table.push([runner.trim(), score, maxScore, weight]);
-    totals.push({
-      score,
-      maxScore,
-      weight,
-    });
-  });
+  table.push(["Total: ", "----", "----", totalPercent]);
 
-  table.push([
-    "Total: ",
-    "----",
-    "----",
-    totals
-      .reduce((acc, { score, weight, maxScore }) => {
-        return acc + ((score || 0) / (maxScore || 1)) * weight;
-      }, 0)
-      .toFixed(2) + "%",
-  ]);
   console.log(table.toString());
 }
 
 exports.AggregateResults = AggregateResults;
+exports.getTableTotals = getTableTotals;
