@@ -22,13 +22,11 @@ try {
   }
 } catch (error) {
   const input = core.getInput("runners");
-  const pattern = /^([^,]+,)*[^,]+$/;
+  const pattern = /^([a-zA-Z0-9]+,)*[a-zA-Z0-9]+$/
   if (!pattern.test(input)) {
-    console.log("HERE")
     console.error("The runners input must be a comma-separated list of strings.");
     core.setFailed("The runners input must be a comma-separated list of strings.");
   } else {
-    console.log("HERE1")
     console.error(error.message)
     core.setFailed(error.message);
   }
