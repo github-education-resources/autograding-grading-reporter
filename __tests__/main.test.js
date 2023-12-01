@@ -15,7 +15,6 @@ test('test runs', () => {
 
   const child = cp.spawnSync(node, [ip], options)
   const stdout = child.stdout.toString()
-  console.log(stdout)
   expect(stdout).toContain(`✅ Test 1`)
 })
 
@@ -25,7 +24,6 @@ test('test fails', () => {
 
   const child = cp.spawnSync(node, [ip], options)
   const stdout = child.stdout.toString()
-  console.log(stdout)
   expect(stdout).toContain(`❌ Test 1`)
 })
 
@@ -35,7 +33,6 @@ test('test errors out', () => {
 
   const child = cp.spawnSync(node, [ip], options)
   const stdout = child.stdout.toString()
-  console.log(stdout)
   expect(stdout).toContain(`Error: Test failed to execute.`)
 })
 
@@ -46,7 +43,6 @@ test('fails to run if input not in the right format', () => {
 
   const child = cp.spawnSync(node, [ip], options)
   const stderr = child.stderr.toString()
-  console.log(stderr)
   expect(stderr).toContain(`The runners input must be a comma-separated list of strings.`)
 })
 
