@@ -18,9 +18,12 @@ exports.ConsoleResults = function ConsoleResults(runnerResults) {
       if (test.status === "pass") {
         console.log(`${COLORS.green}✅ ${test.name}\n${COLORS.reset}`);
         passedTests += 1;
+      } else if (test.status === "error") {
+        console.log(`Error: ${test.message || `Failed to run test '${test.name}'`}\n${COLORS.reset}`);
       } else {
         console.log(`${COLORS.red}❌ ${test.name}\n`);
-        console.log(`Error: ${test.message || `Failed to run test '${test.name}'`}\n${COLORS.reset}`);
+        console.log(`${test.message || ''}\n${COLORS.reset}`);
+        
       }
     });
 
