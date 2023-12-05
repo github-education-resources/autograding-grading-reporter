@@ -18,7 +18,7 @@ jobs:
       - uses: ruby/setup-ruby@v1
       - name: Shout Test
         id: shout-test
-        uses: education/autograding-io-grader@main
+        uses: education/autograding-io-grader@v1
         with:
           test-name: Shout Test
           command: "./test/bin/shout.sh"
@@ -29,7 +29,7 @@ jobs:
           max-score: 100
       - name: A command test
         id: a-command-test
-        uses: education/autograding-command-grader@main
+        uses: education/autograding-command-grader@v1
         with:
           test-name: A command test
           setup-command: bundle install
