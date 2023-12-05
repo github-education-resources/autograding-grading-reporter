@@ -41,11 +41,11 @@ exports.NotifyClassroom = async function NotifyClassroom (runnerResults) {
   const checkRunsResponse = await octokit.rest.checks.listForRepo({
     owner,
     repo,
-    check_name: 'Autograding'
+    check_name: 'Autograding Tests'
   })
 
-  // Filter to find the check run named "Autograding" for the specific workflow run ID
-  const checkRun = checkRunsResponse.data.check_runs.find(cr => cr.name === 'Autograding' && cr.check_suite.workflow_run_id === runId)
+  // Filter to find the check run named "Autograding Tests" for the specific workflow run ID
+  const checkRun = checkRunsResponse.data.check_runs.find(cr => cr.name === 'Autograding Tests' && cr.check_suite.workflow_run_id === runId)
 
   if (!checkRun) return
 
