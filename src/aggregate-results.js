@@ -22,22 +22,24 @@ function getTableTotals(runnerResults, pushToTable) {
 }
 
 function AggregateResults(runnerResults) {
-  const table = new Table({
-    head: ["Test Runner Name", "Test Score", "Max Score", "Weight"],
-    colWidths: [20, 13, 13, 10],
-  });
+  try {
+    const table = new Table({
+      head: ["Test Runner Name", "Test Score", "Max Score", "Weight"],
+      colWidths: [20, 13, 13, 10],
+    });
 
-  const allMaxScores = getAllMaxScores(runnerResults);
+    console.log(COLORS.magenta, "Test runner summary", COLORS.reset);
 
-  console.log(COLORS.magenta, "Test runner summary", COLORS.reset);
+    const totals = getTableTotals(runnerResults, (row) => table.push(row));
 
-  const totals = getTableTotals(runnerResults, (row) => table.push(row));
+    const totalPercent = totals.reduce(totalPercentageReducer, 0).toFixed(2) + "%";
 
-  const totalPercent = totals.reduce(totalPercentageReducer, 0).toFixed(2) + "%";
+    table.push(["Total: ", "----", "----", totalPercent]);
 
-  table.push(["Total: ", "----", "----", totalPercent]);
-
-  console.log(table.toString());
+    console.log(table.toString());
+  } catch (error) {
+    throw new Error(error.message);
+  }
 }
 
 exports.AggregateResults = AggregateResults;
