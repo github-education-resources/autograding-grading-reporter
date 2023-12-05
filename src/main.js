@@ -32,6 +32,8 @@ async function main() {
 
     if (runnerResults.some((r) => r.results.status === "fail")) {
       core.setFailed("Some tests failed.");
+    } elsif (runnerResults.some((r) => r.results.status === "error")) {
+      core.setFailed("Some tests errored.");
     }
   } catch (error) {
     console.error(error.message);
