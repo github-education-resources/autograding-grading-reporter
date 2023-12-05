@@ -1,7 +1,7 @@
 name: Autograding Tests
-'on':
-- push
-- workflow_dispatch
+"on":
+  - push
+  - workflow_dispatch
 permissions:
   checks: write
   actions: read
@@ -10,32 +10,36 @@ jobs:
   integration:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - uses: ruby/setup-ruby@v1
-    - name: Shout Test
-      id: shout-test
-      uses: education/autograding-io-grader@main
-      with:
-        test-name: Shout Test
-        command: "./test/bin/shout.sh"
-        input: hello
-        expected-output: HELLO
-        comparison-method: exact
-        timeout: 10
-        max-score: 100
-    - name: A command test
-      id: a-command-test
-      uses: education/autograding-command-grader@main
-      with:
-        test-name: A command test
-        setup-command: bundle install
-        command: rspec hello_spec.rb
-        timeout: 10
-        max-score: 100
-    - name: Autograding Reporter
-      uses: ./
-      env:
-        SHOUT-TEST_RESULTS: "${{steps.shout-test.outputs.result}}"
-        A-COMMAND-TEST_RESULTS: "${{steps.a-command-test.outputs.result}}"
-      with:
-        runners: shout-test,a-command-test
+      - uses: actions/checkout@v4
+      - name: Install and build node assets
+        run: |
+          npm install --silent
+          npm run build
+      - uses: ruby/setup-ruby@v1
+      - name: Shout Test
+        id: shout-test
+        uses: education/autograding-io-grader@v1
+        with:
+          test-name: Shout Test
+          command: "./test/bin/shout.sh"
+          input: hello
+          expected-output: HELLO
+          comparison-method: exact
+          timeout: 10
+          max-score: 100
+      - name: A command test
+        id: a-command-test
+        uses: education/autograding-command-grader@v1
+        with:
+          test-name: A command test
+          setup-command: bundle install
+          command: rspec hello_spec.rb
+          timeout: 10
+          max-score: 100
+      - name: Autograding Reporter
+        uses: ./
+        env:
+          SHOUT-TEST_RESULTS: "${{steps.shout-test.outputs.result}}"
+          A-COMMAND-TEST_RESULTS: "${{steps.a-command-test.outputs.result}}"
+        with:
+          runners: shout-test,a-command-test

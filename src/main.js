@@ -3,31 +3,40 @@ const { ConsoleResults } = require("./console-results");
 const { NotifyClassroom } = require("./notify-classroom");
 const { AggregateResults } = require("./aggregate-results");
 
-try {
-  const runnerResults = core
-    .getInput("runners")
-    .split(",")
-    .map((runner) => {
+function parseRunnerResults(runners) {
+  try {
+    const returnRunners = runners.split(",").map((runner) => {
       const encodedResults = process.env[`${runner.trim().toUpperCase()}_RESULTS`];
       const json = Buffer.from(encodedResults, "base64").toString("utf-8");
-      return { runner, results: JSON.parse(json) };
+      return { runner: runner.trim(), results: JSON.parse(json) };
     });
-
-  ConsoleResults(runnerResults);
-  NotifyClassroom(runnerResults);
-  AggregateResults(runnerResults);
-
-  if (runnerResults.some((r) => r.results.status === "fail")) {
-    core.setFailed("Some tests failed.");
+    return returnRunners;
+  } catch (error) {
+    throw new Error("The runners input must be a comma-separated list of strings.");
   }
-} catch (error) {
-  const input = core.getInput("runners");
-  const pattern = /^([a-zA-Z0-9]+,)*[a-zA-Z0-9]+$/
-  if (!pattern.test(input)) {
-    console.error("The runners input must be a comma-separated list of strings.");
-    core.setFailed("The runners input must be a comma-separated list of strings.");
-  } else {
-    console.error(error.message)
+}
+exports.parseRunnerResults = parseRunnerResults;
+
+async function main() {
+  try {
+    const runnerResults = parseRunnerResults(core.getInput("runners"));
+
+    ConsoleResults(runnerResults);
+    AggregateResults(runnerResults);
+
+    try {
+      await NotifyClassroom(runnerResults);
+    } catch (error) {
+      console.error("Error in NotifyClassroom:", error);
+    }
+
+    if (runnerResults.some((r) => r.results.status === "fail")) {
+      core.setFailed("Some tests failed.");
+    }
+  } catch (error) {
+    console.error(error.message);
     core.setFailed(error.message);
   }
 }
+
+main();
