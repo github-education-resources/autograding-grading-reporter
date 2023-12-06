@@ -42,7 +42,7 @@ exports.NotifyClassroom = async function NotifyClassroom (runnerResults) {
   if (Number.isNaN(runId)) return
 
   // List check runs for the repository
-  const checkRunsResponse = await octokit.rest.checks.listForRepo({
+  const checkRunsResponse = await octokit.rest.checks.listForRef({
     owner,
     repo,
     check_name: 'Autograding Tests'
