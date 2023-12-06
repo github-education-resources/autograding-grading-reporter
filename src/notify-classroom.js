@@ -14,15 +14,18 @@ exports.NotifyClassroom = async function NotifyClassroom (runnerResults) {
 
     return acc
   }, { totalScore: 0, maxScore: 0 })
+  console.log(`Total points: ${totalScore}/${maxScore}`)
   if (!maxScore) return
 
   // Our action will need to API access the repository so we require a token
   // This will need to be set in the calling workflow, otherwise we'll exit
   const token = process.env.GITHUB_TOKEN || core.getInput('token')
+  console.log(`Token: ${token}`)
   if (!token || token === '') return
 
   // Create the octokit client
   const octokit = github.getOctokit(token)
+  console.log(`Octokit: ${octokit}`)
   if (!octokit) return
 
   // The environment contains a variable for current repository. The repository
@@ -35,6 +38,7 @@ exports.NotifyClassroom = async function NotifyClassroom (runnerResults) {
 
   // We need the workflow run id
   const runId = parseInt(process.env.GITHUB_RUN_ID || '')
+  console.log(`Run ID: ${runId}`)
   if (Number.isNaN(runId)) return
 
   // List check runs for the repository
@@ -46,7 +50,7 @@ exports.NotifyClassroom = async function NotifyClassroom (runnerResults) {
 
   // Filter to find the check run named "Autograding Tests" for the specific workflow run ID
   const checkRun = checkRunsResponse.data.check_runs.find(cr => cr.name === 'Autograding Tests' && cr.check_suite.workflow_run_id === runId)
-
+  console.log(`Check run: ${checkRun}`)
   if (!checkRun) return
 
   // Update the checkrun, we'll assign the title, summary and text even though we expect
