@@ -42,12 +42,16 @@ exports.NotifyClassroom = async function NotifyClassroom (runnerResults) {
   if (Number.isNaN(runId)) return
 
   // Fetch the workflow run
+  console.log(`Check owner: ${owner}`)
+  console.log(`Check repo: ${repo}`)
+  console.log(`Check runId: ${runId}`)
   const workflowRunResponse = await octokit.rest.actions.getWorkflowRun({
     owner,
     repo,
     run_id: runId,
   })
 
+  console.log(`Check workflowRunResponse: ${workflowRunResponse.data}`)
   // Find the check suite run
   const checkSuiteUrl = workflowRunResponse.data.check_suite_url
   const checkSuiteId = parseInt(checkSuiteUrl.match(/[0-9]+$/)[0], 10)
