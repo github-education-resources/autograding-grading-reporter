@@ -51,10 +51,11 @@ exports.NotifyClassroom = async function NotifyClassroom (runnerResults) {
     run_id: runId,
   })
 
-  console.log(`Check workflowRunResponse: ${workflowRunResponse.data}`)
+  console.log(`Check workflowRunResponse: ${workflowRunResponse.data.check_suite_url}`)
   // Find the check suite run
   const checkSuiteUrl = workflowRunResponse.data.check_suite_url
   const checkSuiteId = parseInt(checkSuiteUrl.match(/[0-9]+$/)[0], 10)
+  console.log(`Check checkSuiteId: ${checkSuiteId}`)
   const checkRunsResponse = await octokit.rest.checks.listForSuite({
     owner,
     repo,
