@@ -58,7 +58,7 @@ exports.NotifyClassroom = async function NotifyClassroom (runnerResults) {
     check_suite_id: checkSuiteId,
   })
 
-  console.log(`Check checkRunsResponse: ${checkRunsResponse}`)
+  console.log(`Check checkRunsResponse: ${checkRunsResponse.data.total_count}`)
 
   // List check runs for the repository
   // const checkRunsResponse = await octokit.rest.checks.listForRef({
