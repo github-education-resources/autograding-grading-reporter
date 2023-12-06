@@ -49,8 +49,7 @@ exports.NotifyClassroom = async function NotifyClassroom (runnerResults) {
   })
 
   // Find the check suite run
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const checkSuiteUrl = (workflowRunResponse.data).check_suite_url
+  const checkSuiteUrl = workflowRunResponse.data.check_suite_url
   const checkSuiteId = parseInt(checkSuiteUrl.match(/[0-9]+$/)[0], 10)
   const checkRunsResponse = await octokit.rest.checks.listForSuite({
     owner,
@@ -58,6 +57,8 @@ exports.NotifyClassroom = async function NotifyClassroom (runnerResults) {
     check_name: 'Autograding Tests',
     check_suite_id: checkSuiteId,
   })
+
+  console.log(`Check checkRunsResponse: ${checkRunsResponse}`)
 
   // List check runs for the repository
   // const checkRunsResponse = await octokit.rest.checks.listForRef({
