@@ -14,7 +14,7 @@ exports.NotifyClassroom = async function NotifyClassroom (runnerResults) {
 
     return acc
   }, { totalScore: 0, maxScore: 0 })
-  console.log(`Total points: ${totalScore}/${maxScore}`)
+  
   if (!maxScore) return
 
   // Our action will need to API access the repository so we require a token
@@ -48,11 +48,9 @@ exports.NotifyClassroom = async function NotifyClassroom (runnerResults) {
     run_id: runId,
   })
 
-  console.log(`Check workflowRunResponse: ${workflowRunResponse.data.check_suite_url}`)
   // Find the check suite run
   const checkSuiteUrl = workflowRunResponse.data.check_suite_url
   const checkSuiteId = parseInt(checkSuiteUrl.match(/[0-9]+$/)[0], 10)
-  console.log(`Check checkSuiteId: ${checkSuiteId}`)
   const checkRunsResponse = await octokit.rest.checks.listForSuite({
     owner,
     repo,
@@ -60,11 +58,8 @@ exports.NotifyClassroom = async function NotifyClassroom (runnerResults) {
     check_suite_id: checkSuiteId,
   })
 
-  console.log(`Check checkRunsResponse: ${checkRunsResponse.data.total_count}`)
-
   // Filter to find the check run named "Autograding Tests" for the specific workflow run ID
   const checkRun = checkRunsResponse.data.total_count === 1 && checkRunsResponse.data.check_runs[0]
-  console.log(`Check run: ${checkRun}`)
   if (!checkRun) return
 
   // Update the checkrun, we'll assign the title, summary and text even though we expect
