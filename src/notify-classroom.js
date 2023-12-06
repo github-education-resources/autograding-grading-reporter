@@ -20,12 +20,10 @@ exports.NotifyClassroom = async function NotifyClassroom (runnerResults) {
   // Our action will need to API access the repository so we require a token
   // This will need to be set in the calling workflow, otherwise we'll exit
   const token = process.env.GITHUB_TOKEN || core.getInput('token')
-  console.log(`Token: ${token}`)
   if (!token || token === '') return
 
   // Create the octokit client
   const octokit = github.getOctokit(token)
-  console.log(`Octokit: ${octokit}`)
   if (!octokit) return
 
   // The environment contains a variable for current repository. The repository
@@ -38,7 +36,6 @@ exports.NotifyClassroom = async function NotifyClassroom (runnerResults) {
 
   // We need the workflow run id
   const runId = parseInt(process.env.GITHUB_RUN_ID || '')
-  console.log(`Run ID: ${runId}`)
   if (Number.isNaN(runId)) return
 
   // Fetch the workflow run
