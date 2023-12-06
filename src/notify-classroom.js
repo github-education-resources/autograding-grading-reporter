@@ -41,15 +41,33 @@ exports.NotifyClassroom = async function NotifyClassroom (runnerResults) {
   console.log(`Run ID: ${runId}`)
   if (Number.isNaN(runId)) return
 
-  // List check runs for the repository
-  const checkRunsResponse = await octokit.rest.checks.listForRef({
+  // Fetch the workflow run
+  const workflowRunResponse = await octokit.rest.actions.getWorkflowRun({
     owner,
     repo,
-    check_name: 'Autograding Tests'
+    run_id: runId,
   })
 
+  // Find the check suite run
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const checkSuiteUrl = (workflowRunResponse.data).check_suite_url
+  const checkSuiteId = parseInt(checkSuiteUrl.match(/[0-9]+$/)[0], 10)
+  const checkRunsResponse = await octokit.rest.checks.listForSuite({
+    owner,
+    repo,
+    check_name: 'Autograding Tests',
+    check_suite_id: checkSuiteId,
+  })
+
+  // List check runs for the repository
+  // const checkRunsResponse = await octokit.rest.checks.listForRef({
+  //   owner,
+  //   repo,
+  //   check_name: 'Autograding Tests'
+  // })
+
   // Filter to find the check run named "Autograding Tests" for the specific workflow run ID
-  const checkRun = checkRunsResponse.data.check_runs.find(cr => cr.name === 'Autograding Tests' && cr.check_suite.workflow_run_id === runId)
+  const checkRun = checkRunsResponse.data.total_count === 1 && checkRunsResponse.data.check_runs[0]
   console.log(`Check run: ${checkRun}`)
   if (!checkRun) return
 
