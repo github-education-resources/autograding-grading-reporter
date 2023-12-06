@@ -7,7 +7,7 @@ permissions:
   actions: read
   contents: read
 jobs:
-  integration:
+  autograding:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
