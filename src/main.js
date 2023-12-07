@@ -25,6 +25,7 @@ async function main() {
     AggregateResults(runnerResults);
 
     try {
+      console.log("Before NotifyClassroom")
       await NotifyClassroom(runnerResults);
     } catch (error) {
       console.error("Error in NotifyClassroom:", error);
