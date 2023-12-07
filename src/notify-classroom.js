@@ -14,7 +14,7 @@ exports.NotifyClassroom = async function NotifyClassroom (runnerResults) {
 
     return acc
   }, { totalScore: 0, maxScore: 0 })
-  
+  console.log(`max score: ${maxScore}`)
   if (!maxScore) return
 
   // Our action will need to API access the repository so we require a token
