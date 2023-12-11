@@ -55,7 +55,7 @@ exports.NotifyClassroom = async function NotifyClassroom (runnerResults) {
   const checkRunsResponse = await octokit.rest.checks.listForSuite({
     owner,
     repo,
-    check_name: 'autograding',
+    check_name: 'run-tests',
     check_suite_id: checkSuiteId,
   })
 
