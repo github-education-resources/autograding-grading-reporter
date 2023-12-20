@@ -21,8 +21,8 @@ async function main() {
   try {
     const runnerResults = parseRunnerResults(core.getInput("runners"));
 
-    ConsoleResults(runnerResults);
     AggregateResults(runnerResults);
+    ConsoleResults(runnerResults);
 
     try {
       console.log("Before NotifyClassroom")
