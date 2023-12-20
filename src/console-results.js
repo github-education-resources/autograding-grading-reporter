@@ -38,7 +38,7 @@ exports.ConsoleResults = function ConsoleResults(runnerResults) {
 
     // Calculate and display grand total points
     const grandTotalPoints = (grandTotalPassedTests / grandTotalTests) * 100;
-   // console.log(`${COLORS.cyan}🏆 Grand total points: ${grandTotalPassedTests}/${grandTotalTests}${COLORS.reset}\n`);
+    return `${COLORS.cyan}🏆 Grand total points: ${grandTotalPassedTests}/${grandTotalTests}${COLORS.reset}\n`;
   } catch (error) {
     throw new Error(error.message);
   }
