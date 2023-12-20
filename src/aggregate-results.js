@@ -7,16 +7,15 @@ function getTableTotals(runnerResults, pushToTable) {
 
   return runnerResults.map(({ runner, results }) => {
     const maxScore = getMaxScoreForTest(results);
-    const weight = getTestWeight(maxScore, totalMaxScore);
+    // const weight = getTestWeight(maxScore, totalMaxScore);
     const score = getTestScore(results);
     const testName = runner.trim();
 
-    pushToTable([testName, score, maxScore, weight]);
+    pushToTable([testName, score, maxScore]);
 
     return {
       score,
       maxScore,
-      weight,
     };
   });
 }
@@ -24,8 +23,8 @@ function getTableTotals(runnerResults, pushToTable) {
 function AggregateResults(runnerResults) {
   try {
     const table = new Table({
-      head: ["Test Runner Name", "Test Score", "Max Score", "Weight"],
-      colWidths: [20, 13, 13, 10],
+      head: ["Test Runner Name", "Test Score", "Max Score"],
+      colWidths: [20, 13, 13],
     });
 
     console.log(COLORS.magenta, "Test runner summary", COLORS.reset);
