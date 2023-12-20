@@ -5,10 +5,6 @@ exports.ConsoleResults = function ConsoleResults(runnerResults) {
     let grandTotalPassedTests = 0;
     let grandTotalTests = 0;
 
-    // Calculate and display grand total points
-    const grandTotalPoints = (grandTotalPassedTests / grandTotalTests) * 100;
-    console.log(`${COLORS.cyan}🏆 Grand total points: ${grandTotalPassedTests}/${grandTotalTests}${COLORS.reset}\n`);
-
     runnerResults.forEach(({ runner, results }, index) => {
       // Fun transition to new runner
       if (index > 0) {
@@ -40,7 +36,9 @@ exports.ConsoleResults = function ConsoleResults(runnerResults) {
       console.log(`Total points for ${runner}: ${points.toFixed(2)}/100\n`);
     });
 
- 
+    // Calculate and display grand total points
+    const grandTotalPoints = (grandTotalPassedTests / grandTotalTests) * 100;
+    console.log(`${COLORS.cyan}🏆 Grand total points: ${grandTotalPassedTests}/${grandTotalTests}${COLORS.reset}\n`);
   } catch (error) {
     throw new Error(error.message);
   }

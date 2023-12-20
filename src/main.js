@@ -20,9 +20,9 @@ exports.parseRunnerResults = parseRunnerResults;
 async function main() {
   try {
     const runnerResults = parseRunnerResults(core.getInput("runners"));
-
-    AggregateResults(runnerResults);
     ConsoleResults(runnerResults);
+    AggregateResults(runnerResults);
+
 
     try {
       console.log("Before NotifyClassroom")
