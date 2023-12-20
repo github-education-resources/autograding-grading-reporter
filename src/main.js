@@ -20,8 +20,10 @@ exports.parseRunnerResults = parseRunnerResults;
 async function main() {
   try {
     const runnerResults = parseRunnerResults(core.getInput("runners"));
-    ConsoleResults(runnerResults);
+    let results = ConsoleResults(runnerResults);
     AggregateResults(runnerResults);
+    console.log(`${COLORS.cyan}🏆 Grand total points: ${results.grandTotalPassedTests}/${results.grandTotalTests}${COLORS.reset}\n`);
+
 
 
     try {
