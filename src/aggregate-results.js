@@ -31,9 +31,9 @@ function AggregateResults(runnerResults) {
 
     const totals = getTableTotals(runnerResults, (row) => table.push(row));
 
-    const totalPercent = totals.reduce(totalPercentageReducer, 0).toFixed(2) + "%";
+    // const totalPercent = totals.reduce(totalPercentageReducer, 0).toFixed(2) + "%";
 
-    table.push(["Total: ", "----", "----", totalPercent]);
+    table.push(["Total: ", "----", "----"]);
 
     console.log(table.toString());
   } catch (error) {
