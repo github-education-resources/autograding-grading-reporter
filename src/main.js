@@ -13,9 +13,9 @@ try {
       return { runner, results: JSON.parse(json) };
     });
 
+  results = ConsoleResults(runnerResults);
   NotifyClassroom(runnerResults);
   AggregateResults(runnerResults);
-  results = ConsoleResults(runnerResults);
   console.log(results)
 
   if (runnerResults.some((r) => r.results.status === "fail")) {
