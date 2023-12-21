@@ -35,7 +35,7 @@ jobs:
           setup-command: bundle install
           command: rspec hello_spec.rb
           timeout: 10
-          max-score: 100
+          max-score: 500
       - name: Autograding Reporter
         uses: ./
         env:
