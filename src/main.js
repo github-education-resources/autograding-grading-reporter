@@ -13,10 +13,9 @@ try {
       return { runner, results: JSON.parse(json) };
     });
 
-  results = ConsoleResults(runnerResults);
   NotifyClassroom(runnerResults);
   AggregateResults(runnerResults);
-  console.log(results)
+  console.log(ConsoleResults(runnerResults)); 
 
   if (runnerResults.some((r) => r.results.status === "fail")) {
     core.setFailed("Some tests failed.");
