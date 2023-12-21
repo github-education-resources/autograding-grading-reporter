@@ -33,7 +33,7 @@ function AggregateResults(runnerResults) {
 
     // const totalPercent = totals.reduce(totalPercentageReducer, 0).toFixed(2) + "%";
 
-    table.push(["Total: ", "----", "----"]);
+    table.push(["Total: ", totals, getTotalMaxScore]);
 
     console.log(table.toString());
   } catch (error) {
