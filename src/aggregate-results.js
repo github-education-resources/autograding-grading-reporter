@@ -30,14 +30,10 @@ function AggregateResults(runnerResults) {
     console.log(COLORS.magenta, "Test runner summary", COLORS.reset);
 
     const totals = getTableTotals(runnerResults, (row) => table.push(row));
-    console.log(totals)
 
     // const totalPercent = totals.reduce(totalPercentageReducer, 0).toFixed(2) + "%";
     const totalTestScores = totals.reduce((acc, curr) => acc + curr.score, 0)
-    const totalMaxScores = totals.reduce((acc, curr) => acc + curr.score, 0)
-
-    console.log(totalTestScores)
-    console.log(totalMaxScores)
+    const totalMaxScores = totals.reduce((acc, curr) => acc + curr.maxScore, 0)
 
     table.push(["Total: ", `${totalTestScores}`, `${totalMaxScores}`]);
     
