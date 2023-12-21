@@ -36,7 +36,7 @@ function AggregateResults(runnerResults) {
 
     const totalTestScore = totals.reduce(acc, curr => acc + curr.score, 0)
 
-    table.push(["Total: ", totalTestScore, getTotalMaxScore]);
+    table.push(["Total: ", `${totalTestScore}`, getTotalMaxScore]);
 
     console.log(table.toString());
   } catch (error) {
