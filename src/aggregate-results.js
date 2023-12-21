@@ -39,7 +39,7 @@ function AggregateResults(runnerResults) {
     console.log(totalTestScores)
     console.log(totalMaxScores)
 
-    //table.push(["Total: ", totalTestScores, totalMaxScores]);
+    table.push(["Total: ", `${totalTestScores}`, `${totalMaxScores}`]);
     
     console.log(table.toString());
   } catch (error) {
