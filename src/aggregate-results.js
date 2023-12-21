@@ -36,10 +36,10 @@ function AggregateResults(runnerResults) {
     const totalTestScores = totals.reduce((acc, curr) => acc + curr.score, 0)
     const totalMaxScores = totals.reduce((acc, curr) => acc + curr.score, 0)
 
-    console.log(totalTestScore)
-    console.log(totalMaxScore)
+    console.log(totalTestScores)
+    console.log(totalMaxScores)
 
-    table.push(["Total: ", totalTestScores, totalMaxScores]);
+    //table.push(["Total: ", totalTestScores, totalMaxScores]);
     
     console.log(table.toString());
   } catch (error) {
