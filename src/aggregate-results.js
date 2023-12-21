@@ -33,8 +33,8 @@ function AggregateResults(runnerResults) {
     console.log(totals)
 
     // const totalPercent = totals.reduce(totalPercentageReducer, 0).toFixed(2) + "%";
-    const totalTestScores = totals.reduce(acc, curr => acc + curr.score, 0)
-    const totalMaxScores = totals.reduce(acc, curr => acc + curr.score, 0)
+    const totalTestScores = totals.reduce((acc, curr) => acc + curr.score, 0)
+    const totalMaxScores = totals.reduce((acc, curr) => acc + curr.score, 0)
 
     console.log(totalTestScore)
     console.log(totalMaxScore)
