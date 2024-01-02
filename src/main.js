@@ -1,7 +1,6 @@
 const core = require("@actions/core");
 const { ConsoleResults } = require("./console-results");
 const { NotifyClassroom } = require("./notify-classroom");
-const { AggregateResults } = require("./aggregate-results");
 
 try {
   const runnerResults = core
@@ -16,7 +15,7 @@ try {
 
   ConsoleResults(runnerResults);
   NotifyClassroom(runnerResults);
-  AggregateResults(runnerResults);
+ // AggregateResults(runnerResults);
 
 
   if (runnerResults.some((r) => r.results.status === "fail")) {
