@@ -15,8 +15,6 @@ try {
 
   ConsoleResults(runnerResults);
   NotifyClassroom(runnerResults);
- // AggregateResults(runnerResults);
-
 
   if (runnerResults.some((r) => r.results.status === "fail")) {
     core.setFailed("Some tests failed.");
