@@ -14,10 +14,10 @@ try {
     });
 
 
-  results = ConsoleResults(runnerResults);
+  ConsoleResults(runnerResults);
   NotifyClassroom(runnerResults);
   AggregateResults(runnerResults);
-  console.log(results)
+
 
   if (runnerResults.some((r) => r.results.status === "fail")) {
     core.setFailed("Some tests failed.");
