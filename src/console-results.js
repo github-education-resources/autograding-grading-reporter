@@ -1,4 +1,6 @@
 const { COLORS } = require("./colors");
+const { AggregateResults } = require("./aggregate-results");
+
 
 exports.ConsoleResults = function ConsoleResults(runnerResults) {
   try {
@@ -38,7 +40,8 @@ exports.ConsoleResults = function ConsoleResults(runnerResults) {
 
     // Calculate and display grand total points
     const grandTotalPoints = (grandTotalPassedTests / grandTotalTests) * 100;
-    console.log(`${COLORS.cyan}🏆 Grand total points: ${grandTotalPoints.toFixed(2)}/100${COLORS.reset}\n`);
+    AggregateResults(runnerResults)
+    console.log(`${COLORS.cyan}🏆 Grand total points: ${grandTotalPassedTests}/${grandTotalTests}${COLORS.reset}\n`);
   } catch (error) {
     throw new Error(error.message);
   }
