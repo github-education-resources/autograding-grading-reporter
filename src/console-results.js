@@ -22,7 +22,7 @@ exports.ConsoleResults = function ConsoleResults(runnerResults) {
 
       results.tests.forEach((test) => {
         if (test.status === 'pass') {
-          console.log(`${COLORS.green}✅ ${test.name}\n${COLORS.reset}`)
+          console.log(`${COLORS.green}✅ ${test.name}${COLORS.reset}`)
           passedTests += 1
         } else if (test.status === 'error') {
           console.log(`Error: ${test.message || `Failed to run test '${test.name}'`}\n${COLORS.reset}`)
