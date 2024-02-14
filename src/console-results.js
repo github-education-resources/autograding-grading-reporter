@@ -40,6 +40,8 @@ exports.ConsoleResults = function ConsoleResults(runnerResults) {
       console.log(`Total points for ${runner}: ${score.toFixed(2)}/${maxScore}\n`)
     })
 
+    console.log(COLORS.magenta, 'Test runner summary', COLORS.reset)
+
     // Calculate and display grand total points
     AggregateResults(runnerResults)
     console.log(

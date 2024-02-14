@@ -27,8 +27,6 @@ function AggregateResults(runnerResults) {
       colWidths: [20, 13, 13],
     });
 
-    console.log(COLORS.magenta, "Test runner summary", COLORS.reset);
-
     const totals = getTableTotals(runnerResults, (row) => table.push(row));
 
     // const totalPercent = totals.reduce(totalPercentageReducer, 0).toFixed(2) + "%";
