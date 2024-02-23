@@ -9,9 +9,9 @@ jobs:
         run: |
           npm install --silent
           npm run build
-      - uses: octosteve/python-test-runner@add-additional-info
+      - uses: education/autograding-python-grader@main
         id: runner1
-      - uses: octosteve/python-test-runner@add-additional-info
+      - uses: education/autograding-python-grader@main
         id: runner2
       - name: Show Output
         uses: ./
