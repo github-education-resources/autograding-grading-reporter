@@ -20,6 +20,7 @@ try {
     core.setFailed("Some tests failed.");
   }
 } catch (error) {
+  console.log(error.message)
   const input = core.getInput("runners");
   const pattern = /^([a-zA-Z0-9]+,)*[a-zA-Z0-9]+$/
   if (!pattern.test(input)) {
