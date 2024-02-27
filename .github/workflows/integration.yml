@@ -37,13 +37,13 @@ jobs:
           timeout: 10
           max-score: 20
       - name: A Python test
-        id: python-runner
+        id: python-test
         uses: education/autograding-python-grader@main
       - name: Autograding Reporter
         uses: ./
         env:
           SHOUT-TEST_RESULTS: "${{steps.shout-test.outputs.result}}"
           A-COMMAND-TEST_RESULTS: "${{steps.a-command-test.outputs.result}}"
-          A-PYTHON-TEST_RESULTS: "${{steps.python-runner.outputs.result}}"
+          A-PYTHON-TEST_RESULTS: "${{steps.python-test.outputs.result}}"
         with:
           runners: shout-test,a-command-test,python-runner
