@@ -31,10 +31,10 @@ exports.ConsoleResults = function ConsoleResults(runnerResults) {
         } else if (test.status === 'error') {
           console.log(`Error: ${test.message || `Failed to run test '${test.name}'`}\n${COLORS.reset}`)
         } else {
-          console.log(`${COLORS.red}❌ ${test.name}\n${COLORS.reset}`)
+          console.log(`${COLORS.red}❌ ${test.name}${COLORS.reset}`)
         }
         if (test.test_code) {
-          console.log(`Test code:\n${test.test_code}\n`)
+          console.log(`Test code:\n${test.test_code}\n\n`)
         }
       })
 
