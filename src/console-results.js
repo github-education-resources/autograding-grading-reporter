@@ -17,6 +17,7 @@ exports.ConsoleResults = function ConsoleResults(runnerResults) {
       }
 
       console.log(`🔄 Processing: ${runner}`)
+      console.log(results)
       let passedTests = 0
       const totalTests = results.tests.length
 
@@ -29,6 +30,9 @@ exports.ConsoleResults = function ConsoleResults(runnerResults) {
         } else {
           console.log(`${COLORS.red}❌ ${test.name}\n`)
           console.log(`${test.message || ''}\n${COLORS.reset}`)
+        }
+        if (test.test_code) {
+          console.log(`Test code: ${test.test_code}\n`)
         }
       })
 
