@@ -1,9 +1,13 @@
-name: Test
-on: 
-- push
-- workflow_dispatch
+name: Autograding Tests
+"on":
+  - push
+  - workflow_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
 jobs:
-  integration:
+  autograding:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -11,14 +15,35 @@ jobs:
         run: |
           npm install --silent
           npm run build
-      - uses: education/autograding-python-grader@main
-        id: runner1
-      - uses: education/autograding-python-grader@main
-        id: runner2
-      - name: Show Output
+      - uses: ruby/setup-ruby@v1
+      - name: Shout Test
+        id: shout-test
+        uses: education/autograding-io-grader@v1
+        with:
+          test-name: Shout Test
+          command: "./test/bin/shout.sh"
+          input: hello
+          expected-output: HELLO
+          comparison-method: exact
+          timeout: 10
+          max-score: 10
+      - name: A command test
+        id: a-command-test
+        uses: education/autograding-command-grader@v1
+        with:
+          test-name: A command test
+          setup-command: bundle install
+          command: rspec hello_spec.rb
+          timeout: 10
+          max-score: 20
+      - name: A Python test
+        id: python-runner
+        uses: education/autograding-python-grader@main
+      - name: Autograding Reporter
         uses: ./
         env:
-          RUNNER1_RESULTS: ${{steps.runner1.outputs.result}}
-          RUNNER2_RESULTS: ${{steps.runner2.outputs.result}}
+          SHOUT-TEST_RESULTS: "${{steps.shout-test.outputs.result}}"
+          A-COMMAND-TEST_RESULTS: "${{steps.a-command-test.outputs.result}}"
+          A-PYTHON-TEST_RESULTS: "${{steps.python-runner.outputs.result}}"
         with:
-          runners: "runner1,runner2"
+          runners: shout-test,a-command-test,python-runner
