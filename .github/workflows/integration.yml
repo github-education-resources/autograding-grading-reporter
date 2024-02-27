@@ -46,4 +46,4 @@ jobs:
           A-COMMAND-TEST_RESULTS: "${{steps.a-command-test.outputs.result}}"
           A-PYTHON-TEST_RESULTS: "${{steps.python-test.outputs.result}}"
         with:
-          runners: shout-test,a-command-test,python-runner
+          runners: shout-test,a-command-test,python-test
