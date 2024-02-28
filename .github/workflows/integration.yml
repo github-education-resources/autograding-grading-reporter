@@ -39,6 +39,8 @@ jobs:
       - name: Python test
         id: python-test
         uses: education/autograding-python-grader@main
+        with:
+          test-name: Python test
       - name: Autograding Reporter
         uses: ./
         env:
