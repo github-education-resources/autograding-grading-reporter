@@ -36,8 +36,9 @@ jobs:
           command: rspec hello_spec.rb
           timeout: 10
           max-score: 20
-      - uses: education/autograding-python-grader@main
+      - name: Python test
         id: python-test
+        uses: education/autograding-python-grader@main
       - name: Autograding Reporter
         uses: ./
         env:
