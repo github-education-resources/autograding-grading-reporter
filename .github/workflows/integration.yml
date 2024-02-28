@@ -40,7 +40,7 @@ jobs:
         id: python-test
         uses: education/autograding-python-grader@main
         with:
-          test-name: Python test
+          max-score: 30
       - name: Autograding Reporter
         uses: ./
         env:
