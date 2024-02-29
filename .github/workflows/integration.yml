@@ -39,6 +39,11 @@ jobs:
       - name: Python test
         id: python-test
         uses: education/autograding-python-grader@add-max-score
+      - name: Python test with score
+        id: python-test-with-score
+        uses: education/autograding-python-grader@add-max-score
+        with:
+          max-score: 30
       - name: Autograding Reporter
         uses: ./
         env:
@@ -46,4 +51,4 @@ jobs:
           A-COMMAND-TEST_RESULTS: "${{steps.a-command-test.outputs.result}}"
           PYTHON-TEST_RESULTS: "${{steps.python-test.outputs.result}}"
         with:
-          runners: shout-test,a-command-test,python-test
+          runners: shout-test,a-command-test,python-test,python-test-with-score
