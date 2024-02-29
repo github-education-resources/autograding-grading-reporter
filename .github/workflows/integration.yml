@@ -50,5 +50,6 @@ jobs:
           SHOUT-TEST_RESULTS: "${{steps.shout-test.outputs.result}}"
           A-COMMAND-TEST_RESULTS: "${{steps.a-command-test.outputs.result}}"
           PYTHON-TEST_RESULTS: "${{steps.python-test.outputs.result}}"
+          PYTHON-TEST-WITH-SCORE_RESULTS: "${{steps.python-test-with-score.outputs.result}}"
         with:
           runners: shout-test,a-command-test,python-test,python-test-with-score
