@@ -22,13 +22,23 @@ exports.ConsoleResults = function ConsoleResults(runnerResults) {
 
       results.tests.forEach((test) => {
         if (test.status === 'pass') {
-          console.log(`${COLORS.green}✅ ${test.name}${COLORS.reset}`)
           passedTests += 1
+          if (test.line_no !== 0) {
+            console.log(`${COLORS.green}✅ ${test.name} - line ${test.line_no}${COLORS.reset}`)
+          } else {
+            console.log(`${COLORS.green}✅ ${test.name}${COLORS.reset}`)
+          }
         } else if (test.status === 'error') {
           console.log(`Error: ${test.message || `Failed to run test '${test.name}'`}\n${COLORS.reset}`)
         } else {
-          console.log(`${COLORS.red}❌ ${test.name}\n`)
-          console.log(`${test.message || ''}\n${COLORS.reset}`)
+          if (test.line_no !== 0) {
+            console.log(`${COLORS.red}❌ ${test.name} - line ${test.line_no}${COLORS.reset}`)
+          } else {
+            console.log(`${COLORS.red}❌ ${test.name}${COLORS.reset}`)
+          }
+        }
+        if (test.test_code) {
+          console.log(`Test code:\n${test.test_code}\n`)
         }
       })
 
