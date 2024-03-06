@@ -38,10 +38,10 @@ jobs:
           max-score: 20
       - name: Python test
         id: python-test
-        uses: education/autograding-python-grader@add-max-score
+        uses: education/autograding-python-grader@v1
       - name: Python test with score
         id: python-test-with-score
-        uses: education/autograding-python-grader@add-max-score
+        uses: education/autograding-python-grader@v1
         with:
           max-score: 30
       - name: Autograding Reporter
