@@ -19,28 +19,53 @@
 ```
 🔄 Processing: shout-test
 ✅ Shout Test
+Test code:
+./test/bin/shout.sh <stdin>hello
 
-Total points for shout-test: 100.00/100
+Total points for shout-test: 10.00/10
 
 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀
 
 🔄 Processing: a-command-test
 ✅ A command test
+Test code:
+rspec hello_spec.rb
 
-Total points for a-command-test: 100.00/100
+Total points for a-command-test: 20.00/20
 
-🏆 Grand Total Points: 100.00/100
+🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀
 
- Test Runner Summary 
-┌────────────────────┬─────────────┬─────────────┬──────────┐
-│ Test Runner Name   │ Test Score  │ Max Score   │ Weight   │
-├────────────────────┼─────────────┼─────────────┼──────────┤
-│ shout-test         │ 100         │ 100         │ 50.0     │
-├────────────────────┼─────────────┼─────────────┼──────────┤
-│ a-command-test     │ 100         │ 100         │ 50.0     │
-├────────────────────┼─────────────┼─────────────┼──────────┤
-│ Total:             │ ----        │ ----        │ 100.00%  │
-└────────────────────┴─────────────┴─────────────┴──────────┘
+🔄 Processing: python-test
+✅ test sample - line 4
+Test code:
+collection = [1, 2, 3, 4, 5]
+assert sample_from_collection(collection) in collection
+
+🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀
+
+🔄 Processing: python-test-with-score
+✅ test sample - line 4
+Test code:
+collection = [1, 2, 3, 4, 5]
+assert sample_from_collection(collection) in collection
+
+Total points for python-test-with-score: 30.00/30
+
+Test runner summary
+┌────────────────────┬─────────────┬─────────────┐
+│ Test Runner Name   │ Test Score  │ Max Score   │
+├────────────────────┼─────────────┼─────────────┤
+│ shout-test         │ 10          │ 10          │
+├────────────────────┼─────────────┼─────────────┤
+│ a-command-test     │ 20          │ 20          │
+├────────────────────┼─────────────┼─────────────┤
+│ python-test        │ 0           │ 0           │
+├────────────────────┼─────────────┼─────────────┤
+│ python-test-with-… │ 30          │ 30          │
+├────────────────────┼─────────────┼─────────────┤
+│ Total:             │ 60          │ 60          │
+└────────────────────┴─────────────┴─────────────┘
+🏆 Grand total tests passed: 4/4
 ```
 
 ### Usage
@@ -49,38 +74,57 @@ Total points for a-command-test: 100.00/100
 
 ```yaml
 name: Autograding Tests
-
-on:
-  push
-
+"on":
+  - push
+  - workflow_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
 jobs:
-  run-tests:
+  autograding:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-    - name: Run Autograding Tests
-      id: shout-test
-      uses: education/autograding-io-grader@v1
-      with:
-        test-name: Shout Test
-        command: './bin/shout'
-        input: 'hello'
-        expected-output: 'HELLO'
-        comparison-method: 'exact'
-    - name: A command test
-      id: a-command-test
-      uses: education/autograding-command-grader@v1
-      with:
-       test-name: A command test
-       setup-command: bundle install
-       command: rspec
-       timeout: 10
-       max-score: 100
-    - name: Autograding Reporter
-      uses: education/autograding-grading-reporter@v1
-      env:
-        SHOUT-TEST_RESULTS: "${{steps.shout-test.outputs.result}}"
-        A-COMMAND-TEST_RESULTS: "${{steps.a-command-test.outputs.result}}"
-      with:
-        runners: shout-test,a-command-test
+      - uses: actions/checkout@v4
+      - name: Install and build node assets
+        run: |
+          npm install --silent
+          npm run build
+      - uses: ruby/setup-ruby@v1
+      - name: Shout Test
+        id: shout-test
+        uses: education/autograding-io-grader@v1
+        with:
+          test-name: Shout Test
+          command: "./test/bin/shout.sh"
+          input: hello
+          expected-output: HELLO
+          comparison-method: exact
+          timeout: 10
+          max-score: 10
+      - name: A command test
+        id: a-command-test
+        uses: education/autograding-command-grader@v1
+        with:
+          test-name: A command test
+          setup-command: bundle install
+          command: rspec hello_spec.rb
+          timeout: 10
+          max-score: 20
+      - name: Python test
+        id: python-test
+        uses: education/autograding-python-grader@v1
+      - name: Python test with score
+        id: python-test-with-score
+        uses: education/autograding-python-grader@v1
+        with:
+          max-score: 30
+      - name: Autograding Reporter
+        uses: ./
+        env:
+          SHOUT-TEST_RESULTS: "${{steps.shout-test.outputs.result}}"
+          A-COMMAND-TEST_RESULTS: "${{steps.a-command-test.outputs.result}}"
+          PYTHON-TEST_RESULTS: "${{steps.python-test.outputs.result}}"
+          PYTHON-TEST-WITH-SCORE_RESULTS: "${{steps.python-test-with-score.outputs.result}}"
+        with:
+          runners: shout-test,a-command-test,python-test,python-test-with-score
