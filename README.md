@@ -21,7 +21,7 @@
 
 ```yaml
 name: Autograding Tests
-"on":
+on:
   - push
   - workflow_dispatch
 permissions:
@@ -32,12 +32,8 @@ jobs:
   autograding:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Install and build node assets
-        run: |
-          npm install --silent
-          npm run build
-      - uses: ruby/setup-ruby@v1
+      - name: Checkout code
+        uses: actions/checkout@v4
       - name: Shout Test
         id: shout-test
         uses: education/autograding-io-grader@v1
@@ -76,7 +72,6 @@ jobs:
         with:
           runners: shout-test,a-command-test,python-test,python-test-with-score
 ```
-
 
 ### Example Output
 ```
