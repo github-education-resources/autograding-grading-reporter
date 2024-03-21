@@ -75,6 +75,7 @@ jobs:
           PYTHON-TEST-WITH-SCORE_RESULTS: "${{steps.python-test-with-score.outputs.result}}"
         with:
           runners: shout-test,a-command-test,python-test,python-test-with-score
+```
 
 
 ### Example Output
