@@ -18,6 +18,8 @@ try {
 
   if (runnerResults.some((r) => r.results.status === "fail")) {
     core.setFailed("Some tests failed.");
+  } else if (runnerResults.some((r) => r.results.status === 'error')) {
+    core.setFailed("Some tests errored.");
   }
 } catch (error) {
   const input = core.getInput("runners");
