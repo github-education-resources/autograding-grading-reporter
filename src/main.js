@@ -13,7 +13,7 @@ try {
     });
 
 
-  ConsoleResults(runnerResults);
+  results = ConsoleResults(runnerResults);
   core.setOutput("results", results);
 
   NotifyClassroom(runnerResults);
