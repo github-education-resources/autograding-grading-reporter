@@ -14,6 +14,8 @@ try {
 
 
   ConsoleResults(runnerResults);
+  core.setOutput("results", results);
+
   NotifyClassroom(runnerResults);
 
   if (runnerResults.some((r) => r.results.status === "fail")) {

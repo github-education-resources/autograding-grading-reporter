@@ -11,6 +11,10 @@ inputs:
   runners:
     description: 'Comma-separated list of step ids'
     required: true
+outputs:
+  results:
+    description: >
+      A JSON array that contains the results from each run of the autograder.
 
 runs:
   using: "node20"

@@ -4,14 +4,23 @@ const {getTestScore, getMaxScoreForTest} = require('./helpers/test-helpers')
 
 exports.ConsoleResults = function ConsoleResults(runnerResults) {
   try {
+    let runnerGrades = {};
     let grandTotalPassedTests = 0
     let grandTotalTests = 0
 
     runnerResults.forEach(({runner, results}, index) => {
       // Fun transition to new runner
       const maxScore = getMaxScoreForTest(results)
+
       // const weight = getTestWeight(maxScore, totalMaxScore);
       const score = getTestScore(results)
+
+      // Create initial array for runner results
+      runnerGrades[runner] = {
+        "max": 0,
+        "actual": 0,
+      }
+
       if (index > 0) {
         console.log(`${COLORS.magenta}🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀${COLORS.reset}\n`)
       }
@@ -48,6 +57,11 @@ exports.ConsoleResults = function ConsoleResults(runnerResults) {
 
       // Calculate and display points for the current runner
       if (maxScore !== 0) {
+        // Populate runner grades
+        runnerGrades[runner]["max"] = maxScore
+        runnerGrades[runner]["actual"] = score.toFixed(2)
+
+        // Display total points for run
         console.log(`Total points for ${runner}: ${score.toFixed(2)}/${maxScore}\n`);
       }
     })
@@ -59,6 +73,9 @@ exports.ConsoleResults = function ConsoleResults(runnerResults) {
     console.log(
       `${COLORS.cyan}🏆 Grand total tests passed: ${grandTotalPassedTests}/${grandTotalTests}${COLORS.reset}\n`,
     )
+
+    // Return JSON array of runner grades
+    return JSON.stringify(runnerGrades)
   } catch (error) {
     throw new Error(error.message)
   }
